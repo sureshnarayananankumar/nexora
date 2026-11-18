@@ -119,7 +119,7 @@ git clone https://github.com/sureshnarayananankumar/nexora.git
 cd nexora
 cp .env.example .env          # then change every value, especially JWT_SECRET
 docker compose up -d --build
-./infrastructure/scripts/smoke-test.sh http://localhost:8088
+bash infrastructure/scripts/smoke-test.sh http://localhost:8088
 ```
 
 | URL | What |

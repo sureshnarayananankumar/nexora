@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # End-to-end smoke test against a running stack (used by CI; works locally too).
-#   ./infrastructure/scripts/smoke-test.sh http://localhost:8088
+#   bash infrastructure/scripts/smoke-test.sh http://localhost:8088
 set -euo pipefail
 BASE="${1:-http://localhost:8088}"
 PASS="${NEXORA_DEMO_PASSWORD:-$(grep -E '^NEXORA_DEMO_PASSWORD=' .env | cut -d= -f2-)}"
