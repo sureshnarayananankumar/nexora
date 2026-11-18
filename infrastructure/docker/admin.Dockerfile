@@ -12,4 +12,4 @@ FROM nginxinc/nginx-unprivileged:1.28-alpine
 COPY infrastructure/nginx/admin-spa.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /src/dist/angular-admin/browser /usr/share/nginx/html/admin
 EXPOSE 8080
-HEALTHCHECK --interval=15s --timeout=3s CMD wget -qO- http://localhost:8080/healthz || exit 1
+HEALTHCHECK --interval=15s --timeout=3s CMD wget -qO- http://127.0.0.1:8080/healthz || exit 1
