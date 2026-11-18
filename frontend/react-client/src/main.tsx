@@ -8,6 +8,7 @@ import './styles/global.css';
 import './styles/app.css';
 import { App } from './App';
 import { ApiError } from './api/client';
+import { IS_DEMO } from './lib/demo';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,12 +20,21 @@ const queryClient = new QueryClient({
   },
 });
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </QueryClientProvider>
-  </StrictMode>,
-);
+async function start() {
+  if (IS_DEMO) {
+    // Demo build only: tree-shaken out of normal builds because IS_DEMO is a build-time constant.
+    const { installDemoApi } = await import('../../demo-api/demo-api.js');
+    installDemoApi({ banner: 'Live demo with sample data · sign in with the prefilled account · changes stay in this tab' });
+  }
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <App />
+        </BrowserRouter>
+      </QueryClientProvider>
+    </StrictMode>,
+  );
+}
+
+void start();

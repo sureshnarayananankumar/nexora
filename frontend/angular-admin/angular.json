@@ -31,7 +31,10 @@
             ],
             "styles": [
               "src/styles.scss"
-            ]
+            ],
+            "define": {
+              "NEXORA_DEMO": "false"
+            }
           },
           "configurations": {
             "production": {
@@ -54,6 +57,12 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "demo": {
+              "baseHref": "/nexora/admin/",
+              "define": {
+                "NEXORA_DEMO": "true"
+              }
             }
           },
           "defaultConfiguration": "production"

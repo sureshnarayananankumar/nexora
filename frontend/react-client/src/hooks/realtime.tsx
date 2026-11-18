@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { io, type Socket } from 'socket.io-client';
+import { IS_DEMO } from '../lib/demo';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../stores/auth';
 import { useUi, type PresenceUser } from '../stores/ui';
@@ -23,7 +24,7 @@ export function RealtimeProvider({ children }: { children: ReactNode }) {
   tokenRef.current = token;
 
   useEffect(() => {
-    if (!me) return;
+    if (!me || IS_DEMO) return; // the static demo has no realtime gateway
     const s = io({
       path: '/socket.io',
       transports: ['websocket', 'polling'],

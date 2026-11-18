@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IS_DEMO } from '../../core/demo';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { errorText } from '../../core/toast.service';
@@ -30,7 +31,8 @@ import { errorText } from '../../core/toast.service';
           @if (invalid('password')) { <small class="field-error">Enter your password</small> }
         </label>
         <button class="btn btn-primary btn-lg" type="submit" [disabled]="busy()">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
-        @if (local) { <p class="tiny muted" style="margin-top:14px">Local demo: <code>admin&#64;nexora.dev</code> with your <code>NEXORA_DEMO_PASSWORD</code>.</p> }
+        @if (demo) { <p class="tiny muted" style="margin-top:14px">Online demo: the admin account is prefilled and any password works.</p> }
+        @else if (local) { <p class="tiny muted" style="margin-top:14px">Local demo: <code>admin&#64;nexora.dev</code> with your <code>NEXORA_DEMO_PASSWORD</code>.</p> }
       </form>
     </div>
   `,
@@ -44,10 +46,11 @@ export class LoginComponent {
   readonly busy = signal(false);
   readonly error = signal<string | null>(null);
   readonly local = ['localhost', '127.0.0.1'].includes(location.hostname);
+  readonly demo = IS_DEMO;
 
   readonly form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
+    email: [IS_DEMO ? 'admin@nexora.dev' : '', [Validators.required, Validators.email]],
+    password: [IS_DEMO ? 'demo1234' : '', Validators.required],
   });
 
   invalid(name: 'email' | 'password') {

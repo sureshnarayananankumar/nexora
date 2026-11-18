@@ -15,6 +15,10 @@ Spring Boot · React · Angular · Node.js · MySQL · Redis · Docker · Nginx.
 ![Node 22](https://img.shields.io/badge/Node-22-339933)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
+### [▶ Live demo](https://sureshnarayananankumar.github.io/nexora/) · [Admin console demo](https://sureshnarayananankumar.github.io/nexora/admin/)
+
+<sub>The demo runs the real React and Angular builds in your browser with sample data. Sign in with the prefilled account; changes stay in your tab.</sub>
+
 ![NEXORA dashboard](docs/screenshots/dashboard.jpg)
 
 </div>
@@ -110,6 +114,10 @@ Diagrams, data flows, the ER model and the RBAC matrix are in **[docs/architectu
 
 ## Getting started
 
+### Try it online
+
+The **[live demo](https://sureshnarayananankumar.github.io/nexora/)** is the real React app, and the **[admin demo](https://sureshnarayananankumar.github.io/nexora/admin/)** is the real Angular console, both built in demo mode and hosted on GitHub Pages. Instead of the Spring Boot API, a small in-browser layer ([`frontend/demo-api`](frontend/demo-api/demo-api.js)) answers API calls with sample data, so boards, task edits, comments, insights and workflow test runs all work, but nothing is saved. Realtime presence needs the Node gateway, so it is off in the demo. Normal builds don't include the demo layer. The site is built by [`build-pages-demo.sh`](infrastructure/scripts/build-pages-demo.sh) and deployed by the `Demo site` workflow.
+
 ### Option A: the whole stack in Docker
 
 Requires Docker with Compose v2.
@@ -200,6 +208,7 @@ Every check below has been run. GitHub Actions repeats them all on each push.
 | Angular: production build, 7 unit tests (headless Chrome) | ✅ locally and on GitHub Actions |
 | Node realtime: type-check, 15 tests (including a real Redis), build | ✅ locally and on GitHub Actions |
 | Both UIs rendered and screenshotted against a mock API with sample data | ✅ locally |
+| Pages demo: both demo builds walked through in a browser (sign-in, board, create task, comment, insights, workflow builder, deep links, admin console) | ✅ locally |
 
 ## Roadmap
 

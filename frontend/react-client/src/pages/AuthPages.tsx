@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { IS_DEMO } from '../lib/demo';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +26,8 @@ const registerSchema = z.object({
 
 // Demo accounts exist only when the API seeds local development data.
 const DEMO = ['sarah@acme.dev', 'rahul@acme.dev', 'mei@acme.dev'];
-const showDemo = import.meta.env.DEV || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const showDemo = IS_DEMO || import.meta.env.DEV || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+const DEMO_PASSWORD = 'demo1234';
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -53,7 +55,10 @@ export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState<string | null>(null);
-  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<z.infer<typeof loginSchema>>({ resolver: zodResolver(loginSchema) });
+  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: IS_DEMO ? { email: DEMO[0], password: DEMO_PASSWORD } : undefined,
+  });
   const from = (location.state as { from?: string } | null)?.from ?? '/dashboard';
 
   if (status === 'authenticated') return <Navigate to={from} replace />;
@@ -94,7 +99,9 @@ export function LoginPage() {
                 <button type="button" key={email} className="btn btn-sm" onClick={() => setValue('email', email, { shouldValidate: true })}>{email}</button>
               ))}
             </div>
-            <div className="tiny subtle" style={{ marginTop: 8 }}>Password: the <code>NEXORA_DEMO_PASSWORD</code> from your <code>.env</code>.</div>
+            <div className="tiny subtle" style={{ marginTop: 8 }}>
+              {IS_DEMO ? <>Online demo: any password works and data is sample data.</> : <>Password: the <code>NEXORA_DEMO_PASSWORD</code> from your <code>.env</code>.</>}
+            </div>
           </div>
         )}
       </form>
