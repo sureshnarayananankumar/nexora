@@ -189,17 +189,17 @@ nexora/
 
 ## Verification status
 
-What was run where, stated plainly:
+Every check below has been run. GitHub Actions repeats them all on each push.
 
 | Check | Status |
 |---|---|
-| React: type-check, 11 unit tests, production build | ✅ run locally |
-| Angular: production build, 7 unit tests (headless Chrome) | ✅ run locally |
-| Node realtime: type-check, 15 tests (including a real Redis), build | ✅ run locally |
-| Both UIs rendered and screenshotted against a mock API | ✅ run locally |
-| `docker compose config` (both files) and Nginx config parse | ✅ run locally |
-| Spring Boot: syntax-checked (119 files) and internal references resolved by script | ✅ run locally |
-| Spring Boot: `mvn verify`, integration tests, `docker compose up` + smoke test | ⏳ not run in the authoring sandbox (Maven Central and Docker Hub were unreachable). They are wired into GitHub Actions; see the CI badge above. |
+| Spring Boot: compile, 20 unit tests, and the `ApiFlowIT` integration test against real MySQL 8.4 + Redis 7.4 (Testcontainers) | ✅ GitHub Actions |
+| Full stack: `docker compose up --build --wait` (all services healthy), then 11 smoke checks through Nginx | ✅ GitHub Actions |
+| Docker images for api, realtime, web, admin and nginx built and pushed to GHCR | ✅ GitHub Actions |
+| React: type-check, 11 unit tests, production build | ✅ locally and on GitHub Actions |
+| Angular: production build, 7 unit tests (headless Chrome) | ✅ locally and on GitHub Actions |
+| Node realtime: type-check, 15 tests (including a real Redis), build | ✅ locally and on GitHub Actions |
+| Both UIs rendered and screenshotted against a mock API with sample data | ✅ locally |
 
 ## Roadmap
 
