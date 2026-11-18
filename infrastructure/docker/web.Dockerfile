@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1.7
 # ── NEXORA product app (React 19 + Vite) · build context: repository root ──
-FROM node:22-alpine AS build
+# glibc base: Rollup's native parser can overflow musl's small default thread stack on Alpine.
+FROM node:22-bookworm-slim AS build
 WORKDIR /src
 COPY frontend/react-client/package.json frontend/react-client/package-lock.json ./
 RUN npm ci --no-audit --no-fund

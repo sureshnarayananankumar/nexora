@@ -25,7 +25,7 @@ public final class PriorityRecommender {
         List<Recommendation> out = new ArrayList<>();
         for (TaskFacts t : tasks) {
             if (!t.open()) continue;
-            Recommendation r = score(t, blocking.getOrDefault(t.id(), 0), milestoneDue.get(t.milestoneId()), today);
+            Recommendation r = score(t, blocking.getOrDefault(t.id(), 0), t.milestoneId() == null ? null : milestoneDue.get(t.milestoneId()), today);
             if (r.recommended() != t.priority()) out.add(r);
         }
         out.sort(Comparator.comparingInt(Recommendation::score).reversed());

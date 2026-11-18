@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1.7
 # ── NEXORA admin console (Angular 20) · build context: repository root ──
-FROM node:22-alpine AS build
+# glibc base for the build stage (same reason as web.Dockerfile).
+FROM node:22-bookworm-slim AS build
 WORKDIR /src
 COPY frontend/angular-admin/package.json frontend/angular-admin/package-lock.json ./
 RUN npm ci --no-audit --no-fund
