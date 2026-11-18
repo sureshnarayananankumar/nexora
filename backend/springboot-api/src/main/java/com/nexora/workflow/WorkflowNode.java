@@ -24,6 +24,8 @@ public class WorkflowNode {
     private String label;
     @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, Object> config = new HashMap<>();
+    @Column(name = "position_x")
     private double positionX;
+    @Column(name = "position_y")
     private double positionY;
 }
