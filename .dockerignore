@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/target
+**/.angular
+**/coverage
+**/.env
+**/.env.*
+!.env.example
+.git
+.github
+docs/screenshots

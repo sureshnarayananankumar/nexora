@@ -1,0 +1,31 @@
+# Development: only MySQL and Redis in Docker, with ports published, so you can run the
+# API (mvn spring-boot:run), realtime (npm run dev), React (npm run dev) and Angular (npm start)
+# on your machine with hot reload.
+#   docker compose -f docker-compose.dev.yml up -d
+name: nexora-dev
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: nexora
+      MYSQL_USER: nexora
+      MYSQL_PASSWORD: nexora
+      MYSQL_ROOT_PASSWORD: nexora-root
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci", "--default-time-zone=+00:00"]
+    ports: ["3306:3306"]
+    volumes: [mysql-dev:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -unexora -pnexora --silent"]
+      interval: 5s
+      retries: 20
+
+  redis:
+    image: redis:7.4-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+
+volumes:
+  mysql-dev:
